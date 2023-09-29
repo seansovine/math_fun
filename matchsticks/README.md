@@ -33,10 +33,10 @@ symmetrical. We can work out that $\theta$ should satisfy
 
 $$\frac{1}{2} = (1 - 2\sin(\theta / 2))\cdot \cos(\theta / 2) = \cos(\theta / 2) - \sin(\theta).$$
 
-I didn't see an immediate way to solve the equation using trig identities,
+I didn't see an immediate way to solve the equation using trigonometric identities,
 so I made a small program `find_angle.py` to solve it
 numerically using SciPy's `fsolve`. This produced the number
 
 $$0.155816897844861 \cdot \pi,$$
 
-which can verified with the graphing program.
+which can be verified with the graphing program.
