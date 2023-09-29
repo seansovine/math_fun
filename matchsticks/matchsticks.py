@@ -101,4 +101,8 @@ ani = anim.FuncAnimation(
     repeat=True,
 )
 
+SAVE = False
+if SAVE:
+    ani.save("matchsticks.gif", fps=20)
+
 plt.show()
