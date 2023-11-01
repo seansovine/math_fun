@@ -74,8 +74,10 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
   };
 
   std::vector<Candidate> sets{};
+  std::array<std::vector<Card>, 3> cardsByColor;
 
   // Generate color-homogeneous candidates.
+  int i = 0;
   for (Color color : colors) {
     std::vector<Card> colorCards{};
     // Collect cards with this color.
@@ -84,6 +86,8 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
         colorCards.push_back(card);
       }
     }
+    cardsByColor[i++] = colorCards;
+
     // Build and check candidate sets for this color.
     std::vector<Candidate> colorCands = getColorHomogCand(colorCards);
     for (Candidate cand : colorCands) {
@@ -95,7 +99,17 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
   }
 
   // Now generate and check color-distinct candidates.
-  // ...
+  for (Card card1 : cardsByColor[0]) {
+    for (Card card2 : cardsByColor[1]) {
+      for (Card card3 : cardsByColor[2]) {
+        Candidate cand{card1, card2, card3};
+        if (sameOrDiffNumber(cand.cards) && sameOrDiffShading(cand.cards) &&
+            sameOrDiffShape(cand.cards)) {
+          sets.push_back(cand);
+        }
+      }
+    }
+  }
 
   // First generate candidates based on color, then
   // check each for validity based on remaining traits.
