@@ -8,6 +8,7 @@ enum class Number { one, two, three };
 enum class Shading { filled, outlined, striped };
 enum class Shape { diamond, oval, squiggle };
 
+// For iterating over all options in various places. (Consider alternatives.)
 std::vector<Color> colors = {Color::red, Color::green, Color::blue};
 std::vector<Number> numbers = {Number::one, Number::two, Number::three};
 std::vector<Shading> shadings = {Shading::filled, Shading::outlined, Shading::striped};
