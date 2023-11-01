@@ -119,6 +119,7 @@ int main() {
   shuffle(deck);
   std::vector<Card> table{deck.begin(), deck.begin() + 12};
 
+  // Print cards on table.
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 4; j++) {
       std::cout << table[j + 3 * i] << " ";
@@ -128,6 +129,8 @@ int main() {
 
   std::cout << std::endl << "Generating sets:" << std::endl;
   auto sets = findSets(table);
+
+  // Print sets found, if any.
   if (sets.size() == 0) {
     std::cout << " -- No sets found!" << std::endl;
   } else {
