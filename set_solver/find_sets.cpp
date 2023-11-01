@@ -38,7 +38,9 @@ void shuffle(std::vector<Card> &deck) {
 }
 
 struct Candidate {
-  std::array<Card, 3> cards{};
+  std::array<Card, 3> cards;
+
+  Candidate(Card &first, Card &second, Card &third) : cards{first, second, third} {}
 };
 
 std::vector<Candidate> findSets(const std::vector<Card> &table) {
