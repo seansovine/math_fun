@@ -116,6 +116,18 @@ int main() {
   }
 
   std::cout << std::endl << "Generating sets:" << std::endl;
+  auto sets = findSets(table);
+  if (sets.size() == 0) {
+    std::cout << " -- No sets found!" << std::endl;
+  } else {
+    std::cout << " -- " << sets.size() << " sets found!" << std::endl;
+  }
+  for (Candidate cand : sets) {
+    for (Card card : cand.cards) {
+      std::cout << card << " ";
+    }
+    std::cout << std::endl;
+  }
 }
 
 // g++ find_sets.cpp -o build/find_sets && echo "---" && ./build/find_sets
