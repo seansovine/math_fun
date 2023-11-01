@@ -40,8 +40,21 @@ void shuffle(std::vector<Card> &deck) {
 struct Candidate {
   std::array<Card, 3> cards;
 
-  Candidate(Card &first, Card &second, Card &third) : cards{first, second, third} {}
+  Candidate(const Card &first, const Card &second, const Card &third)
+      : cards{first, second, third} {}
 };
+
+std::vector<Candidate> getColorHomogCand(const std::vector<Card> &colorCards) {
+  std::vector<Candidate> colorCand{};
+  for (int i = 0; i < colorCards.size() - 2; i++) {
+    for (int j = i + 1; j < colorCards.size() - 1; j++) {
+      for (int k = j + 1; k < colorCards.size(); k++) {
+        colorCand.emplace_back(colorCards[i], colorCards[j], colorCards[k]);
+      }
+    }
+  }
+  return colorCand;
+}
 
 std::vector<Candidate> findSets(const std::vector<Card> &table) {
   auto sameOrDiffNumber = [](const std::array<Card, 3> &cand) -> bool {
@@ -51,6 +64,26 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
   };
 
   std::vector<Candidate> sets{};
+
+  // Generate color-homogeneous candidates.
+  for (Color color : colors) {
+    std::vector<Card> colorCards{};
+    for (Card card : table) {
+      if (card.color == color) {
+        colorCards.push_back(card);
+      }
+      std::vector<Candidate> colorCands = getColorHomogCand(colorCards);
+      for (Candidate cand : colorCands) {
+        if (sameOrDiffNumber(cand.cards)) {
+          sets.push_back(cand);
+        }
+      }
+    }
+  }
+
+  // Now generate and check color-distinct candidates.
+  // ...
+
   // First generate candidates based on color, then
   // check each for validity based on remaining traits.
   return sets;
