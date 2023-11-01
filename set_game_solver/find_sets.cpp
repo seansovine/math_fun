@@ -20,7 +20,6 @@ std::vector<Card> generateDeck() {
       }
     }
   }
-
   return deck;
 }
 
@@ -111,8 +110,6 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
     }
   }
 
-  // First generate candidates based on color, then
-  // check each for validity based on remaining traits.
   return sets;
 }
 
