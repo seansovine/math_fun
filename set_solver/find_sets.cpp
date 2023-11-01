@@ -1,3 +1,4 @@
+#include <array>
 #include <chrono>
 #include <iostream>
 #include <random>
@@ -37,10 +38,16 @@ void shuffle(std::vector<Card> &deck) {
 }
 
 struct Candidate {
-  std::set<Card> cards{};
+  std::array<Card, 3> cards{};
 };
 
 std::vector<Candidate> findSets(const std::vector<Card> &table) {
+  auto sameOrDiffNumber = [](const std::array<Card, 3> &cand) -> bool {
+    return (cand[0].number == cand[1].number && cand[0].number == cand[2].number) ||
+           cand[0].number != cand[1].number && cand[1].number != cand[2].number &&
+               cand[0].number != cand[2].number;
+  };
+
   std::vector<Candidate> sets{};
   // First generate candidates based on color, then
   // check each for validity based on remaining traits.
