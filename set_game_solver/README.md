@@ -42,3 +42,9 @@ all have the same number of objects.
 
 Randomly draws 12 cards from the Set deck, and then finds all
 _sets_ (by the game's definition) contained in those 12 cards.
+
+The approach here is to first choose all candidate sets of 3 cards based on
+a single attribute (color is arbitrarily chosen here), and then
+to check if each candidate has all attributes the same or all different
+in each other dimension, in which case it is considered a valid "set"
+according to the game's definition.
