@@ -62,21 +62,34 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
            cand[0].number != cand[1].number && cand[1].number != cand[2].number &&
                cand[0].number != cand[2].number;
   };
+  auto sameOrDiffShading = [](const std::array<Card, 3> &cand) -> bool {
+    return (cand[0].shading == cand[1].shading && cand[0].shading == cand[2].shading) ||
+           cand[0].shading != cand[1].shading && cand[1].shading != cand[2].shading &&
+               cand[0].shading != cand[2].shading;
+  };
+  auto sameOrDiffShape = [](const std::array<Card, 3> &cand) -> bool {
+    return (cand[0].shape == cand[1].shape && cand[0].shape == cand[2].shape) ||
+           cand[0].shape != cand[1].shape && cand[1].shape != cand[2].shape &&
+               cand[0].shape != cand[2].shape;
+  };
 
   std::vector<Candidate> sets{};
 
   // Generate color-homogeneous candidates.
   for (Color color : colors) {
     std::vector<Card> colorCards{};
+    // Collect cards with this color.
     for (Card card : table) {
       if (card.color == color) {
         colorCards.push_back(card);
       }
-      std::vector<Candidate> colorCands = getColorHomogCand(colorCards);
-      for (Candidate cand : colorCands) {
-        if (sameOrDiffNumber(cand.cards)) {
-          sets.push_back(cand);
-        }
+    }
+    // Build and check candidate sets for this color.
+    std::vector<Candidate> colorCands = getColorHomogCand(colorCards);
+    for (Candidate cand : colorCands) {
+      if (sameOrDiffNumber(cand.cards) && sameOrDiffShading(cand.cards) &&
+          sameOrDiffShape(cand.cards)) {
+        sets.push_back(cand);
       }
     }
   }
