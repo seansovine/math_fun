@@ -43,7 +43,7 @@ struct Candidate {
       : cards{first, second, third} {}
 };
 
-std::vector<Candidate> getColorHomogCand(const std::vector<Card> &colorCards) {
+std::vector<Candidate> getColorHomogCands(const std::vector<Card> &colorCards) {
   std::vector<Candidate> colorCand{};
   for (int i = 0; i < colorCards.size() - 2; i++) {
     for (int j = i + 1; j < colorCards.size() - 1; j++) {
@@ -53,6 +53,18 @@ std::vector<Candidate> getColorHomogCand(const std::vector<Card> &colorCards) {
     }
   }
   return colorCand;
+}
+
+std::vector<Candidate> getColorDistinctCands(const std::array<std::vector<Card>, 3> &cardsByColor) {
+  std::vector<Candidate> cands;
+  for (Card card1 : cardsByColor[0]) {
+    for (Card card2 : cardsByColor[1]) {
+      for (Card card3 : cardsByColor[2]) {
+        cands.emplace_back(card1, card2, card3);
+      }
+    }
+  }
+  return cands;
 }
 
 std::vector<Candidate> findSets(const std::vector<Card> &table) {
@@ -88,7 +100,7 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
     cardsByColor[i++] = colorCards;
 
     // Build and check candidate sets for this color.
-    std::vector<Candidate> colorCands = getColorHomogCand(colorCards);
+    std::vector<Candidate> colorCands = getColorHomogCands(colorCards);
     for (Candidate cand : colorCands) {
       if (sameOrDiffNumber(cand.cards) && sameOrDiffShading(cand.cards) &&
           sameOrDiffShape(cand.cards)) {
@@ -98,15 +110,11 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
   }
 
   // Now generate and check color-distinct candidates.
-  for (Card card1 : cardsByColor[0]) {
-    for (Card card2 : cardsByColor[1]) {
-      for (Card card3 : cardsByColor[2]) {
-        Candidate cand{card1, card2, card3};
-        if (sameOrDiffNumber(cand.cards) && sameOrDiffShading(cand.cards) &&
-            sameOrDiffShape(cand.cards)) {
-          sets.push_back(cand);
-        }
-      }
+  std::vector<Candidate> colorDistinctCands = getColorDistinctCands(cardsByColor);
+  for (Candidate cand : colorDistinctCands) {
+    if (sameOrDiffNumber(cand.cards) && sameOrDiffShading(cand.cards) &&
+        sameOrDiffShape(cand.cards)) {
+      sets.push_back(cand);
     }
   }
 
