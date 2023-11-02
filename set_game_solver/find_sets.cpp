@@ -77,9 +77,10 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
         (cand[0].shading == cand[1].shading && cand[0].shading == cand[2].shading) ||
         (cand[0].shading != cand[1].shading && cand[1].shading != cand[2].shading &&
          cand[0].shading != cand[2].shading);
-    bool sameOrDiffShape = (cand[0].shape == cand[1].shape && cand[0].shape == cand[2].shape) ||
-                           (cand[0].shape != cand[1].shape && cand[1].shape != cand[2].shape &&
-                            cand[0].shape != cand[2].shape);
+    bool sameOrDiffShape = // Force clang-format linebreak.
+        (cand[0].shape == cand[1].shape && cand[0].shape == cand[2].shape) ||
+        (cand[0].shape != cand[1].shape && cand[1].shape != cand[2].shape &&
+         cand[0].shape != cand[2].shape);
 
     return sameOrDiffNumber && sameOrDiffShading && sameOrDiffShape;
   };
