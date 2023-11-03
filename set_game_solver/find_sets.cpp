@@ -69,20 +69,23 @@ std::vector<Candidate> getColorDistinctCands(const std::array<std::vector<Card>,
 
 std::vector<Candidate> findSets(const std::vector<Card> &table) {
   auto sameOrDiff = [](const std::array<Card, 3> &cand) -> bool {
-    bool sameOrDiffNumber =
-        (cand[0].number == cand[1].number && cand[0].number == cand[2].number) ||
-        (cand[0].number != cand[1].number && cand[1].number != cand[2].number &&
-         cand[0].number != cand[2].number);
-    bool sameOrDiffShading =
-        (cand[0].shading == cand[1].shading && cand[0].shading == cand[2].shading) ||
-        (cand[0].shading != cand[1].shading && cand[1].shading != cand[2].shading &&
-         cand[0].shading != cand[2].shading);
-    bool sameOrDiffShape = // Force clang-format linebreak.
-        (cand[0].shape == cand[1].shape && cand[0].shape == cand[2].shape) ||
-        (cand[0].shape != cand[1].shape && cand[1].shape != cand[2].shape &&
-         cand[0].shape != cand[2].shape);
+    if (!(cand[0].number == cand[1].number && cand[0].number == cand[2].number) &&
+        !(cand[0].number != cand[1].number && cand[1].number != cand[2].number &&
+          cand[0].number != cand[2].number)) {
+      return false;
+    }
+    if (!(cand[0].shading == cand[1].shading && cand[0].shading == cand[2].shading) &&
+        !(cand[0].shading != cand[1].shading && cand[1].shading != cand[2].shading &&
+          cand[0].shading != cand[2].shading)) {
+      return false;
+    }
+    if (!(cand[0].shape == cand[1].shape && cand[0].shape == cand[2].shape) &&
+        !(cand[0].shape != cand[1].shape && cand[1].shape != cand[2].shape &&
+          cand[0].shape != cand[2].shape)) {
+      return false;
+    }
 
-    return sameOrDiffNumber && sameOrDiffShading && sameOrDiffShape;
+    return true;
   };
 
   std::vector<Candidate> sets{};
