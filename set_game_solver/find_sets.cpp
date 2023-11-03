@@ -45,6 +45,10 @@ struct Candidate {
 
 std::vector<Candidate> getColorHomogCands(const std::vector<Card> &colorCards) {
   std::vector<Candidate> colorCand{};
+  if (colorCards.size() < 3) {
+    return colorCand;
+  }
+
   for (int i = 0; i < colorCards.size() - 2; i++) {
     for (int j = i + 1; j < colorCards.size() - 1; j++) {
       for (int k = j + 1; k < colorCards.size(); k++) {
