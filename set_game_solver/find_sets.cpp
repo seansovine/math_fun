@@ -56,6 +56,7 @@ std::vector<Candidate> getColorHomogCands(const std::vector<Card> &colorCards) {
       }
     }
   }
+
   return colorCand;
 }
 
@@ -98,8 +99,8 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
   // Generate color-homogeneous candidates.
   int i = 0;
   for (Color color : colors) {
-    std::vector<Card> colorCards{};
     // Collect cards with this color.
+    std::vector<Card> colorCards{};
     for (Card card : table) {
       if (card.color == color) {
         colorCards.push_back(card);
