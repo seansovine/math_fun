@@ -110,6 +110,7 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
     // Build and check candidate sets for this color.
     std::vector<Candidate> colorCands = getColorHomogCands(colorCards);
     std::cout << " -- Generated " << colorCands.size() << " candidates." << std::endl;
+
     for (Candidate cand : colorCands) {
       if (sameOrDiff(cand.cards)) {
         sets.push_back(cand);
@@ -120,6 +121,7 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
   // Now generate and check color-distinct candidates.
   std::vector<Candidate> colorDistinctCands = getColorDistinctCands(cardsByColor);
   std::cout << " -- Generated " << colorDistinctCands.size() << " candidates." << std::endl;
+
   for (Candidate cand : colorDistinctCands) {
     if (sameOrDiff(cand.cards)) {
       sets.push_back(cand);
