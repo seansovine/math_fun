@@ -129,6 +129,7 @@ Candidates findSets(const Cards &table) {
 
 void printTable(const Cards &table) {
   // Print cards on table.
+  std::cout << "Cards on table:" << std::endl;
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 4; j++) {
       std::cout << table[j + 3 * i] << " ";
