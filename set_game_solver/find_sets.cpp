@@ -125,14 +125,7 @@ Candidates findSets(const Cards &table) {
   return sets;
 }
 
-/* main */
-
-int main() {
-  Cards deck = generateDeck();
-
-  shuffle(deck);
-  Cards table{deck.begin(), deck.begin() + 12};
-
+void printResults(const Cards &table, const Candidates &sets) {
   // Print cards on table.
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 4; j++) {
@@ -140,9 +133,6 @@ int main() {
     }
     std::cout << std::endl;
   }
-
-  std::cout << std::endl << "Generating sets:" << std::endl;
-  auto sets = findSets(table);
 
   // Print sets found, if any.
   if (sets.size() == 0) {
@@ -156,6 +146,20 @@ int main() {
     }
     std::cout << std::endl;
   }
+}
+
+/* main */
+
+int main() {
+  Cards deck = generateDeck();
+
+  shuffle(deck);
+  Cards table{deck.begin(), deck.begin() + 12};
+
+  std::cout << std::endl << "Generating sets:" << std::endl;
+  auto sets = findSets(table);
+
+  printResults(table, sets);
 }
 
 // g++ find_sets.cpp -o build/find_sets && echo "---" && ./build/find_sets
