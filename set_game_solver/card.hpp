@@ -10,17 +10,16 @@ enum class Shape { diamond, oval, squiggle };
 
 struct Attributes {
   // For iterating over all options in various places. (Consider alternatives.)
-  const static std::vector<Color> colors;
-  const static std::vector<Number> numbers;
-  const static std::vector<Shading> shadings;
-  const static std::vector<Shape> shapes;
+  const static std::array<Color, 3> colors;
+  const static std::array<Number, 3> numbers;
+  const static std::array<Shading, 3> shadings;
+  const static std::array<Shape, 3> shapes;
 };
 
-const std::vector<Color> Attributes::colors{Color::red, Color::green, Color::blue};
-const std::vector<Number> Attributes::numbers{Number::one, Number::two, Number::three};
-const std::vector<Shading> Attributes::shadings{Shading::filled, Shading::outlined,
-                                                Shading::striped};
-const std::vector<Shape> Attributes::shapes{Shape::diamond, Shape::oval, Shape::squiggle};
+const std::array<Color, 3> Attributes::colors{Color::red, Color::green, Color::blue};
+const std::array<Number, 3> Attributes::numbers{Number::one, Number::two, Number::three};
+const std::array<Shading, 3> Attributes::shadings{Shading::filled, Shading::outlined, Shading::striped};
+const std::array<Shape, 3> Attributes::shapes{Shape::diamond, Shape::oval, Shape::squiggle};
 
 struct Card {
   Color color;
@@ -28,8 +27,7 @@ struct Card {
   Shading shading;
   Shape shape;
 
-  Card(Color c, Number n, Shading shad, Shape shap)
-      : color{c}, number{n}, shading{shad}, shape{shap} {}
+  Card(Color c, Number n, Shading shad, Shape shap) : color{c}, number{n}, shading{shad}, shape{shap} {}
 };
 
 std::ostream &operator<<(std::ostream &os, const Card &card) {
@@ -85,8 +83,7 @@ std::ostream &operator<<(std::ostream &os, const Card &card) {
 struct Candidate {
   std::array<Card, 3> cards;
 
-  Candidate(const Card &first, const Card &second, const Card &third)
-      : cards{first, second, third} {}
+  Candidate(const Card &first, const Card &second, const Card &third) : cards{first, second, third} {}
 
   const Card &operator[](const int i) const { return cards[i]; }
 };

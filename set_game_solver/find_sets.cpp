@@ -119,10 +119,8 @@ Candidates findSets(const Cards &table) {
 
   // Build and check color-distinct candidates.
   Candidates colorDistinctCands = getColorDistinctCands(cardsByColor);
-  std::cout << " -- Generated " << colorDistinctCands.size() << " distinct candidates."
-            << std::endl;
-  std::copy_if(colorDistinctCands.begin(), colorDistinctCands.end(), std::back_inserter(sets),
-               sameOrDiff);
+  std::cout << " -- Generated " << colorDistinctCands.size() << " distinct candidates." << std::endl;
+  std::copy_if(colorDistinctCands.begin(), colorDistinctCands.end(), std::back_inserter(sets), sameOrDiff);
 
   return sets;
 }
@@ -166,4 +164,4 @@ int main() {
   printResults(sets);
 }
 
-// g++ find_sets.cpp -o build/find_sets && echo "---" && ./build/find_sets
+// c && g++ find_sets.cpp -o build/find_sets && echo "---\n" && ./build/find_sets && echo "\n"
