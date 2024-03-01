@@ -81,3 +81,12 @@ std::ostream &operator<<(std::ostream &os, const Card &card) {
   os << " ]";
   return os;
 }
+
+struct Candidate {
+  std::array<Card, 3> cards;
+
+  Candidate(const Card &first, const Card &second, const Card &third)
+      : cards{first, second, third} {}
+
+  const Card &operator[](const int i) const { return cards[i]; }
+};

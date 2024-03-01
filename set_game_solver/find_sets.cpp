@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <array>
 #include <iostream>
 #include <random>
@@ -8,12 +9,14 @@
 // and Attributes class w/ vectors for iteration.
 #include "card.hpp"
 
-std::vector<Card> generateDeck(Attributes attrs) {
+/* functions */
+
+std::vector<Card> generateDeck() {
   std::vector<Card> deck;
-  for (Color color : attrs.colors) {
-    for (Number number : attrs.numbers) {
-      for (Shading shading : attrs.shadings) {
-        for (Shape shape : attrs.shapes) {
+  for (Color color : Attributes::colors) {
+    for (Number number : Attributes::numbers) {
+      for (Shading shading : Attributes::shadings) {
+        for (Shape shape : Attributes::shapes) {
           deck.emplace_back(color, number, shading, shape);
         }
       }
@@ -34,13 +37,6 @@ void shuffle(std::vector<Card> &deck) {
     deck[j] = temp;
   }
 }
-
-struct Candidate {
-  std::array<Card, 3> cards;
-
-  Candidate(const Card &first, const Card &second, const Card &third)
-      : cards{first, second, third} {}
-};
 
 std::vector<Candidate> getColorHomogCands(const std::vector<Card> &colorCards) {
   std::vector<Candidate> colorCand{};
@@ -71,8 +67,8 @@ std::vector<Candidate> getColorDistinctCands(const std::array<std::vector<Card>,
   return cands;
 }
 
-std::vector<Candidate> findSets(const std::vector<Card> &table, Attributes attrs) {
-  auto sameOrDiff = [](const std::array<Card, 3> &cand) -> bool {
+std::vector<Candidate> findSets(const std::vector<Card> &table) {
+  auto sameOrDiff = [](const Candidate &cand) -> bool {
     if (!(cand[0].number == cand[1].number && cand[0].number == cand[2].number) &&
         !(cand[0].number != cand[1].number && cand[1].number != cand[2].number &&
           cand[0].number != cand[2].number)) {
@@ -97,43 +93,33 @@ std::vector<Candidate> findSets(const std::vector<Card> &table, Attributes attrs
 
   // Generate color-homogeneous candidates.
   int i = 0;
-  for (Color color : attrs.colors) {
+  for (Color color : Attributes::colors) {
     // Collect cards with this color.
     std::vector<Card> colorCards{};
-    for (Card card : table) {
-      if (card.color == color) {
-        colorCards.push_back(card);
-      }
-    }
+    std::copy_if(table.begin(), table.end(), std::back_inserter(colorCards),
+                 [color](const Card &card) { return card.color == color; });
     cardsByColor[i++] = colorCards;
 
     // Build and check candidate sets for this color.
     std::vector<Candidate> colorCands = getColorHomogCands(colorCards);
-    std::cout << " -- Generated " << colorCands.size() << " candidates." << std::endl;
-
-    for (Candidate cand : colorCands) {
-      if (sameOrDiff(cand.cards)) {
-        sets.push_back(cand);
-      }
-    }
+    std::cout << " -- Generated " << colorCands.size() << " homogeneous candidates." << std::endl;
+    std::copy_if(colorCands.begin(), colorCands.end(), std::back_inserter(sets), sameOrDiff);
   }
 
-  // Now generate and check color-distinct candidates.
+  // Build and check color-distinct candidates.
   std::vector<Candidate> colorDistinctCands = getColorDistinctCands(cardsByColor);
-  std::cout << " -- Generated " << colorDistinctCands.size() << " candidates." << std::endl;
-
-  for (Candidate cand : colorDistinctCands) {
-    if (sameOrDiff(cand.cards)) {
-      sets.push_back(cand);
-    }
-  }
+  std::cout << " -- Generated " << colorDistinctCands.size() << " distinct candidates."
+            << std::endl;
+  std::copy_if(colorDistinctCands.begin(), colorDistinctCands.end(), std::back_inserter(sets),
+               sameOrDiff);
 
   return sets;
 }
 
+/* main */
+
 int main() {
-  Attributes attrs{};
-  std::vector<Card> deck = generateDeck(attrs);
+  std::vector<Card> deck = generateDeck();
 
   shuffle(deck);
   std::vector<Card> table{deck.begin(), deck.begin() + 12};
@@ -147,7 +133,7 @@ int main() {
   }
 
   std::cout << std::endl << "Generating sets:" << std::endl;
-  auto sets = findSets(table, attrs);
+  auto sets = findSets(table);
 
   // Print sets found, if any.
   if (sets.size() == 0) {
