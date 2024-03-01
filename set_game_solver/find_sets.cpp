@@ -110,16 +110,18 @@ Candidates findSets(const Cards &table) {
 
     // Build and check candidate sets for this color.
     Candidates colorCands = getColorHomogCands(colorCards);
-    std::cout << " -- Generated " << colorCands.size() << " homogeneous candidates." << std::endl;
     std::copy_if(colorCands.begin(), colorCands.end(), std::back_inserter(sets), sameOrDiff);
+
+    std::cout << " -- Generated " << colorCands.size() << " homogeneous candidates." << std::endl;
 
     cardsByColor[i++] = std::move(colorCards);
   }
 
   // Build and check color-distinct candidates.
   Candidates colorDistinctCands = getColorDistinctCands(cardsByColor);
-  std::cout << " -- Generated " << colorDistinctCands.size() << " distinct candidates." << std::endl;
   std::copy_if(colorDistinctCands.begin(), colorDistinctCands.end(), std::back_inserter(sets), sameOrDiff);
+
+  std::cout << " -- Generated " << colorDistinctCands.size() << " distinct candidates." << std::endl;
 
   return sets;
 }
