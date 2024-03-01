@@ -107,12 +107,13 @@ Candidates findSets(const Cards &table) {
     Cards colorCards{};
     std::copy_if(table.begin(), table.end(), std::back_inserter(colorCards),
                  [color](const Card &card) { return card.color == color; });
-    cardsByColor[i++] = colorCards;
 
     // Build and check candidate sets for this color.
     Candidates colorCands = getColorHomogCands(colorCards);
     std::cout << " -- Generated " << colorCands.size() << " homogeneous candidates." << std::endl;
     std::copy_if(colorCands.begin(), colorCands.end(), std::back_inserter(sets), sameOrDiff);
+
+    cardsByColor[i++] = std::move(colorCards);
   }
 
   // Build and check color-distinct candidates.
