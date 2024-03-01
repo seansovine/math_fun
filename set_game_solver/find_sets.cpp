@@ -5,8 +5,7 @@
 #include <set>
 #include <vector>
 
-// Defines Card struct and Color, Number, Shading, Shape enums,
-// and Attributes class w/ vectors for iteration.
+// Defines Attributes, Card, and Candidate.
 #include "card.hpp"
 
 /* functions */
