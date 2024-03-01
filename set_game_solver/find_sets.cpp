@@ -95,9 +95,10 @@ struct SameOrDiffChecker {
 };
 
 Candidates findSets(const Cards &table) {
-  SameOrDiffChecker sameOrDiff;
+  std::cout << std::endl << "Finding sets:" << std::endl;
 
   Candidates sets{};
+  SameOrDiffChecker sameOrDiff;
   std::array<Cards, 3> cardsByColor;
 
   // Generate color-homogeneous candidates.
@@ -126,7 +127,7 @@ Candidates findSets(const Cards &table) {
   return sets;
 }
 
-void printResults(const Cards &table, const Candidates &sets) {
+void printTable(const Cards &table) {
   // Print cards on table.
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 4; j++) {
@@ -134,7 +135,9 @@ void printResults(const Cards &table, const Candidates &sets) {
     }
     std::cout << std::endl;
   }
+}
 
+void printResults(const Candidates &sets) {
   // Print sets found, if any.
   if (sets.size() == 0) {
     std::cout << std::endl << "No sets found!" << std::endl;
@@ -156,11 +159,10 @@ int main() {
 
   shuffle(deck);
   Cards table{deck.begin(), deck.begin() + 12};
+  printTable(table);
 
-  std::cout << std::endl << "Generating sets:" << std::endl;
   auto sets = findSets(table);
-
-  printResults(table, sets);
+  printResults(sets);
 }
 
 // g++ find_sets.cpp -o build/find_sets && echo "---" && ./build/find_sets
