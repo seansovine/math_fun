@@ -67,8 +67,8 @@ std::vector<Candidate> getColorDistinctCands(const std::array<std::vector<Card>,
   return cands;
 }
 
-std::vector<Candidate> findSets(const std::vector<Card> &table) {
-  auto sameOrDiff = [](const Candidate &cand) -> bool {
+struct SameOrDiffChecker {
+  bool operator()(const Candidate &cand) {
     if (!(cand[0].number == cand[1].number && cand[0].number == cand[2].number) &&
         !(cand[0].number != cand[1].number && cand[1].number != cand[2].number &&
           cand[0].number != cand[2].number)) {
@@ -86,7 +86,12 @@ std::vector<Candidate> findSets(const std::vector<Card> &table) {
     }
 
     return true;
-  };
+  }
+};
+
+std::vector<Candidate>
+findSets(const std::vector<Card> &table) {
+  SameOrDiffChecker sameOrDiff;
 
   std::vector<Candidate> sets{};
   std::array<std::vector<Card>, 3> cardsByColor;
