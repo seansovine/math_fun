@@ -8,14 +8,19 @@ enum class Number { one, two, three };
 enum class Shading { filled, outlined, striped };
 enum class Shape { diamond, oval, squiggle };
 
-class Attributes {
-public:
+struct Attributes {
   // For iterating over all options in various places. (Consider alternatives.)
-  std::vector<Color> colors = {Color::red, Color::green, Color::blue};
-  std::vector<Number> numbers = {Number::one, Number::two, Number::three};
-  std::vector<Shading> shadings = {Shading::filled, Shading::outlined, Shading::striped};
-  std::vector<Shape> shapes = {Shape::diamond, Shape::oval, Shape::squiggle};
+  const static std::vector<Color> colors;
+  const static std::vector<Number> numbers;
+  const static std::vector<Shading> shadings;
+  const static std::vector<Shape> shapes;
 };
+
+const std::vector<Color> Attributes::colors{Color::red, Color::green, Color::blue};
+const std::vector<Number> Attributes::numbers{Number::one, Number::two, Number::three};
+const std::vector<Shading> Attributes::shadings{Shading::filled, Shading::outlined,
+                                                Shading::striped};
+const std::vector<Shape> Attributes::shapes{Shape::diamond, Shape::oval, Shape::squiggle};
 
 struct Card {
   Color color;
