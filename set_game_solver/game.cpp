@@ -1,6 +1,7 @@
 #include <memory>
 #include <random>
 #include <ranges>
+#include <stdexcept>
 
 #include "game.hpp"
 
@@ -28,6 +29,16 @@ void ShuffledDeckBuilder::shuffle() {
     int j = distrib(rng);
     std::swap(deck[i], deck[j]);
   }
+}
+
+Cards ShuffledDeckBuilder::dealCards(unsigned num) {
+  if (num > size(deck)) {
+    throw new std::out_of_range("Number of cards requested is greater than number currently in deck.");
+  }
+
+  Cards dealt{begin(deck), begin(deck) + 12};
+  deck.erase(begin(deck), begin(deck) + 12);
+  return dealt;
 }
 
 /* SetFinder member and helper functions. */

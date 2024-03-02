@@ -43,10 +43,9 @@ std::string outputForResults(const Results &results) {
 
 int main() {
   std::cout << std::endl << "Generating and shuffling deck." << std::endl;
-  Cards deck = ShuffledDeckBuilder().getDeck();
+  auto deckBuilder = ShuffledDeckBuilder();
 
-  Cards table{begin(deck), begin(deck) + 12};
-  deck.erase(begin(deck), begin(deck) + 12);
+  Cards table = deckBuilder.dealCards(12);
   std::cout << outputForSetup(table);
 
   std::cout << std::endl << "Finding sets:" << std::endl << std::endl;

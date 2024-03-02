@@ -15,6 +15,8 @@ public:
 
   const Cards getDeck() const && { return deck; }
 
+  Cards dealCards(unsigned num);
+
 private:
   void generate();
 
