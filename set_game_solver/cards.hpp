@@ -12,16 +12,11 @@ enum class Shading { filled, outlined, striped };
 enum class Shape { diamond, oval, squiggle };
 
 struct Attributes {
-  const static std::array<Color, 3> colors;
-  const static std::array<Number, 3> numbers;
-  const static std::array<Shading, 3> shadings;
-  const static std::array<Shape, 3> shapes;
+  constexpr static std::array<Color, 3> colors = {Color::red, Color::green, Color::blue};
+  constexpr static std::array<Number, 3> numbers = {Number::one, Number::two, Number::three};
+  constexpr static std::array<Shading, 3> shadings = {Shading::filled, Shading::outlined, Shading::striped};
+  constexpr static std::array<Shape, 3> shapes = {Shape::diamond, Shape::oval, Shape::squiggle};
 };
-
-const std::array<Color, 3> Attributes::colors{Color::red, Color::green, Color::blue};
-const std::array<Number, 3> Attributes::numbers{Number::one, Number::two, Number::three};
-const std::array<Shading, 3> Attributes::shadings{Shading::filled, Shading::outlined, Shading::striped};
-const std::array<Shape, 3> Attributes::shapes{Shape::diamond, Shape::oval, Shape::squiggle};
 
 struct Card {
   Color color;
