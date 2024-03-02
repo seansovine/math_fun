@@ -1,5 +1,8 @@
+#ifndef CARDS_H
+#define CARDS_H
+
+#include <array>
 #include <iostream>
-#include <vector>
 
 /* Definitions and data structures. */
 
@@ -108,3 +111,5 @@ struct Results {
     }
   }
 };
+
+#endif // Header include guards
