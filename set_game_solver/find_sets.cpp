@@ -6,10 +6,15 @@
 
 std::string outputForSetup(const Cards &table) {
   std::ostringstream buffer{};
+  static const int TABLE_WIDTH = 4;
+
+  int tableSize = size(table);
+  int numRows = tableSize / TABLE_WIDTH + (tableSize % TABLE_WIDTH != 0);
+
   buffer << "Cards on table:" << std::endl << std::endl;
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 4; j++) {
-      buffer << table[j + 3 * i] << " ";
+  for (int i = 0; i < numRows; i++) {
+    for (int j = i * TABLE_WIDTH; j < (i + 1) * TABLE_WIDTH && j < tableSize; j++) {
+      buffer << table[j] << " ";
     }
     buffer << std::endl;
   }
@@ -42,10 +47,13 @@ std::string outputForResults(const Results &results) {
 /* Main. */
 
 int main() {
+  static const size_t CARDS_ON_TABLE = 16;
+  static_assert(CARDS_ON_TABLE <= 3 * 3 * 3 * 3);
+
   std::cout << std::endl << "Generating and shuffling deck." << std::endl;
   auto deckBuilder = ShuffledDeckBuilder();
 
-  Cards table = deckBuilder.dealCards(12);
+  Cards table = deckBuilder.dealCards(CARDS_ON_TABLE);
   std::cout << outputForSetup(table);
 
   std::cout << std::endl << "Finding sets:" << std::endl << std::endl;
