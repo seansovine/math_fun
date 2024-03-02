@@ -55,5 +55,3 @@ int main() {
   Results sets = findSets(table);
   std::cout << outputForResults(sets);
 }
-
-// c && g++ find_sets.cpp -o build/find_sets && echo "---" && ./build/find_sets && echo

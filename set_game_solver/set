@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+clear
+
+echo "Build time:"
+time g++ find_sets.cpp -o build/find_sets
+
+# Thanks Stack Overflow: https://stackoverflow.com/questions/11027679/capture-stdout-and-stderr-into-different-variables
+{
+    IFS=$'\n' read -r -d '' RUNTIME;
+    IFS=$'\n' read -r -d '' OUTPUT;
+} < <((printf '\0%s\0' "$( time ./build/find_sets )" 1>&2) 2>&1)
+
+printf -- "\n---\n\n"
+printf "$OUTPUT\n\n"
+printf -- "---\n\n"
+printf "Run time:\n\n"
+echo "$RUNTIME"
