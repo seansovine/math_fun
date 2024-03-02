@@ -3,6 +3,8 @@
 
 #include <array>
 #include <iostream>
+#include <optional>
+#include <ranges>
 #include <vector>
 
 /* Definitions and data structures. */
@@ -25,6 +27,8 @@ struct Card {
   Shading shading;
   Shape shape;
 
+  std::optional<int> tablePosition;
+
   Card(Color c, Number n, Shading shad, Shape shap) : color{c}, number{n}, shading{shad}, shape{shap} {}
 };
 
@@ -46,7 +50,9 @@ struct Results {
   int greenCandidates;
   int blueCandidates;
   int distinctCandidates;
+
   Candidates sets;
+  Cards remaining;
 
   void setColorCandidates(Color color, int number) {
     switch (color) {
@@ -56,6 +62,13 @@ struct Results {
       greenCandidates = number;
     case Color::blue:
       blueCandidates = number;
+    }
+  }
+
+  void setRemaining(Cards &&inRemaining) {
+    remaining = inRemaining;
+    for (size_t i = 0; i < size(remaining); i++) {
+      remaining[i].tablePosition = i;
     }
   }
 };

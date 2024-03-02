@@ -43,6 +43,11 @@ Cards ShuffledDeckBuilder::dealCards(unsigned num) {
 
   Cards dealt{begin(deck), begin(deck) + num};
   deck.erase(begin(deck), begin(deck) + num);
+
+  for (size_t i = 0; i < size(dealt); i++) {
+    dealt[i].tablePosition = i;
+  }
+
   return dealt;
 }
 
@@ -113,6 +118,16 @@ Results &&SetFinder::find() && {
 
   auto setsView = filter(colorDistinctCands, sameOrDiff);
   results.sets.insert(end(results.sets), begin(setsView), end(setsView));
+
+  for (Candidate set : results.sets) {
+    for (Card card : set.cards) {
+      table[card.tablePosition.value()].tablePosition = std::nullopt;
+    }
+  }
+
+  auto remainingView = filter(table, [](const Card &card) -> bool { return card.tablePosition.has_value(); });
+  Cards remaining{begin(remainingView), end(remainingView)};
+  results.setRemaining(std::move(remaining));
 
   return std::move(results);
 }
