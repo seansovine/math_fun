@@ -16,6 +16,8 @@ public:
 
   Cards getDeck() const { return deck; }
 
+  size_t cardsInDeck() const { return size(deck); }
+
   Cards dealCards(unsigned num);
 
 private:
@@ -29,12 +31,18 @@ private:
 
 /* Game logic. */
 
+/**
+ *  Usage: Results results = SetFinder(std::move(table)).find();
+ *
+ *  Consumes table, finds sets, and moves results back out to caller.
+ */
+
 class SetFinder {
 
 public:
   SetFinder(Cards &&inTable);
 
-  Results&& find() &&;
+  Results &&find() &&;
 
 private:
   void setup();
