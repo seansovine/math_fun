@@ -17,20 +17,20 @@ std::string outputForSetup(const Cards &table) {
   return buffer.str();
 }
 
-std::string outputForResults(std::shared_ptr<Results> results) {
+std::string outputForResults(const Results& results) {
   std::ostringstream buffer{};
-  buffer << " -- Generated " << results->redCandidates << " red candidates." << std::endl
-         << "              " << results->greenCandidates << " green candidates." << std::endl
-         << "              " << results->blueCandidates << " blue candidates." << std::endl
-         << "              " << results->distinctCandidates << " color-distinct candidates." << std::endl;
+  buffer << " -- Generated " << results.redCandidates << " red candidates." << std::endl
+         << "              " << results.greenCandidates << " green candidates." << std::endl
+         << "              " << results.blueCandidates << " blue candidates." << std::endl
+         << "              " << results.distinctCandidates << " color-distinct candidates." << std::endl;
 
-  if (results->sets.size() == 0) {
+  if (results.sets.size() == 0) {
     buffer << std::endl << "No sets found!" << std::endl;
   } else {
-    buffer << std::endl << "" << results->sets.size() << " sets found! They are:" << std::endl << std::endl;
+    buffer << std::endl << "" << results.sets.size() << " sets found! They are:" << std::endl << std::endl;
   }
 
-  for (Candidate cand : results->sets) {
+  for (Candidate cand : results.sets) {
     for (Card card : cand.cards) {
       buffer << card << " ";
     }

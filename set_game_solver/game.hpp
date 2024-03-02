@@ -93,21 +93,16 @@ class SetFinder {
 public:
   SetFinder(Cards &&inTable) : table{inTable}, results{} { setup(); }
 
-  std::shared_ptr<Results> find() {
+  Results find() {
     using namespace std::views;
-
-    if(results) {
-      return results;
-    }
-    results = std::make_shared<Results>();
 
     for (const auto &colorCands : candsByColor) {
       auto setsView = filter(colorCands, sameOrDiff);
-      results->sets.insert(end(results->sets), begin(setsView), end(setsView));
+      results.sets.insert(end(results.sets), begin(setsView), end(setsView));
     }
 
     auto setsView = filter(colorDistinctCands, sameOrDiff);
-    results->sets.insert(end(results->sets), begin(setsView), end(setsView));
+    results.sets.insert(end(results.sets), begin(setsView), end(setsView));
 
     return results;
   }
@@ -124,18 +119,18 @@ private:
       Cards colorCards{begin(colorView), end(colorView)};
 
       candsByColor[i] = getColorHomogCands(colorCards);
-      results->setColorCandidates(color, size(candsByColor[i]));
+      results.setColorCandidates(color, size(candsByColor[i]));
 
       cardsByColor[i++] = std::move(colorCards);
     }
 
     colorDistinctCands = getColorDistinctCands(cardsByColor);
-    results->distinctCandidates = size(colorDistinctCands);
+    results.distinctCandidates = size(colorDistinctCands);
   }
 
 private:
   Cards table;
-  std::shared_ptr<Results> results;
+  Results results;
   SameOrDiffChecker sameOrDiff;
 
   std::array<Candidates, 3> candsByColor;
