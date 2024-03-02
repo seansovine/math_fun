@@ -86,7 +86,7 @@ struct SameOrDiffChecker {
 
 SetFinder::SetFinder(Cards &&inTable) : table{inTable}, results{} { setup(); }
 
-Results SetFinder::find() {
+const Results SetFinder::find() && {
   using namespace std::views;
   SameOrDiffChecker sameOrDiff;
 

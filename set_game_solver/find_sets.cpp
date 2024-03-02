@@ -29,7 +29,6 @@ std::string outputForResults(const Results &results) {
   } else {
     buffer << std::endl << "" << results.sets.size() << " sets found! They are:" << std::endl << std::endl;
   }
-
   for (Candidate cand : results.sets) {
     for (Card card : cand.cards) {
       buffer << card << " ";
@@ -51,6 +50,6 @@ int main() {
   std::cout << outputForSetup(table);
 
   std::cout << std::endl << "Finding sets:" << std::endl << std::endl;
-  auto results = SetFinder(std::move(table)).find();
+  Results results = SetFinder(std::move(table)).find();
   std::cout << outputForResults(results);
 }
