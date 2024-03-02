@@ -51,7 +51,6 @@ int main() {
   std::cout << outputForSetup(table);
 
   std::cout << std::endl << "Finding sets:" << std::endl << std::endl;
-  auto setFinder = SetFinder(std::move(table));
-  auto results = setFinder.find();
+  auto results = SetFinder(std::move(table)).find();
   std::cout << outputForResults(results);
 }
