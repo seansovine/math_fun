@@ -1,3 +1,4 @@
 ---
 Language: Cpp
 ColumnLimit: 110
+IndentPPDirectives: BeforeHash
