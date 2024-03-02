@@ -17,7 +17,7 @@ std::string outputForSetup(const Cards &table) {
   return buffer.str();
 }
 
-std::string outputForResults(const Results& results) {
+std::string outputForResults(const Results &results) {
   std::ostringstream buffer{};
   buffer << " -- Generated " << results.redCandidates << " red candidates." << std::endl
          << "              " << results.greenCandidates << " green candidates." << std::endl
@@ -44,11 +44,10 @@ std::string outputForResults(const Results& results) {
 
 int main() {
   std::cout << std::endl << "Generating and shuffling deck." << std::endl;
-  Cards deck = generateDeck();
+  Cards deck = ShuffledDeckBuilder().getDeck();
 
-  shuffle(deck);
-  Cards table{deck.begin(), deck.begin() + 12};
-  deck.erase(deck.begin(), deck.begin() + 12);
+  Cards table{begin(deck), begin(deck) + 12};
+  deck.erase(begin(deck), begin(deck) + 12);
   std::cout << outputForSetup(table);
 
   std::cout << std::endl << "Finding sets:" << std::endl << std::endl;

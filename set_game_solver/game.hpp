@@ -8,33 +8,48 @@
 
 #include "cards.hpp"
 
-/* Game logic. */
+/* Game setup. */
 
-Cards generateDeck() {
-  Cards deck;
-  for (Color color : Attributes::colors) {
-    for (Number number : Attributes::numbers) {
-      for (Shading shading : Attributes::shadings) {
-        for (Shape shape : Attributes::shapes) {
-          deck.emplace_back(color, number, shading, shape);
+class ShuffledDeckBuilder {
+
+public:
+  ShuffledDeckBuilder() {
+    generate();
+    shuffle();
+  }
+
+  const Cards getDeck() const { return deck; }
+
+private:
+  void generate() {
+    deck.reserve(3 * 3 * 3 * 3);
+    for (Color color : Attributes::colors) {
+      for (Number number : Attributes::numbers) {
+        for (Shading shading : Attributes::shadings) {
+          for (Shape shape : Attributes::shapes) {
+            deck.emplace_back(color, number, shading, shape);
+          }
         }
       }
     }
   }
 
-  return deck;
-}
+  void shuffle() {
+    std::random_device rd;
+    std::mt19937 rng(rd());
 
-void shuffle(Cards &deck) {
-  std::random_device rd;
-  std::mt19937 rng(rd());
-
-  for (int i = deck.size() - 1; i >= 0; i--) {
-    std::uniform_int_distribution<> distrib(0, i);
-    int j = distrib(rng);
-    std::swap(deck[i], deck[j]);
+    for (int i = deck.size() - 1; i >= 0; i--) {
+      std::uniform_int_distribution<> distrib(0, i);
+      int j = distrib(rng);
+      std::swap(deck[i], deck[j]);
+    }
   }
-}
+
+private:
+  Cards deck;
+};
+
+/* Game logic. */
 
 Candidates getColorHomogCands(const Cards &colorCards) {
   Candidates colorCand{};
