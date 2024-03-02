@@ -1,11 +1,26 @@
 #!/usr/bin/env bash
 
 set -e
+rebuild=0
 
-clear
+usage() {
+    echo "Optionally builds, and then runs the set solver program."
+    echo "  Usage: Pass -r to rebuild."
+}
 
-echo "Build time:"
-time g++ -std=c++20 find_sets.cpp -o build/find_sets
+while test $# != 0
+do
+    case "$1" in
+    -r) rebuild=1 ;;
+    *)  usage; exit 0 ;;
+    esac
+    shift
+done
+
+if [ $rebuild -ne 0 ]; then
+    echo "Build time:"
+    time g++ -std=c++20 game.cpp find_sets.cpp cards.cpp -o build/find_sets
+fi
 
 # Thanks Stack Overflow: https://stackoverflow.com/questions/11027679/capture-stdout-and-stderr-into-different-variables
 {
