@@ -40,11 +40,16 @@ all have the same number of objects.
 
 ## This program:
 
-Randomly draws 12 cards from the Set deck, and then finds all
-_sets_ (by the game's definition) contained in those 12 cards.
+Randomly draws 15 cards (†) from the Set deck, and then finds all
+_sets_ (by the game's definition) contained in those cards.
 
 The approach here is to first choose all candidate sets of 3 cards based on
 a single attribute (color is arbitrarily chosen here), and then
 to check if each candidate has all attributes the same or all different
 in each other dimension, in which case it is considered a valid "set"
 according to the game's definition.
+
+† `CARDS_ON_TABLE` is set to 15 in `find_set.cpp`, but can be any value between
+0 and 3 \* 3 \* 3 \* 3. The normal Set game uses 12 cards, unless there is
+no set in the current table cards, in which case 3 more cards are added
+until there is a set.
