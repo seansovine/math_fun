@@ -126,8 +126,7 @@ Results &&SetFinder::find() && {
   }
 
   auto remainingView = filter(table, [](const Card &card) -> bool { return card.tablePosition.has_value(); });
-  Cards remaining{begin(remainingView), end(remainingView)};
-  results.setRemaining(std::move(remaining));
+  results.setRemaining(remainingView);
 
   return std::move(results);
 }

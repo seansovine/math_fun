@@ -65,8 +65,8 @@ struct Results {
     }
   }
 
-  void setRemaining(Cards &&inRemaining) {
-    remaining = inRemaining;
+  template <typename T> void setRemaining(T inRemaining) {
+    remaining = Cards{begin(inRemaining), end(inRemaining)};
     for (size_t i = 0; i < size(remaining); i++) {
       remaining[i].tablePosition = i;
     }
