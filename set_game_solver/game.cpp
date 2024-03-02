@@ -36,8 +36,8 @@ Cards ShuffledDeckBuilder::dealCards(unsigned num) {
     throw new std::out_of_range("Number of cards requested is greater than number currently in deck.");
   }
 
-  Cards dealt{begin(deck), begin(deck) + 12};
-  deck.erase(begin(deck), begin(deck) + 12);
+  Cards dealt{begin(deck), begin(deck) + num};
+  deck.erase(begin(deck), begin(deck) + num);
   return dealt;
 }
 
