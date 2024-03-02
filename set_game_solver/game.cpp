@@ -49,9 +49,9 @@ Candidates getColorHomogCands(const Cards &colorCards) {
     return colorCand;
   }
 
-  for (int i = 0; i < colorCards.size() - 2; i++) {
-    for (int j = i + 1; j < colorCards.size() - 1; j++) {
-      for (int k = j + 1; k < colorCards.size(); k++) {
+  for (size_t i = 0; i < colorCards.size() - 2; i++) {
+    for (size_t j = i + 1; j < colorCards.size() - 1; j++) {
+      for (size_t k = j + 1; k < colorCards.size(); k++) {
         colorCand.emplace_back(colorCards[i], colorCards[j], colorCards[k]);
       }
     }
