@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "cards.hpp"
+#include "output.hpp"
 
 /* Game setup. */
 
