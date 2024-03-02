@@ -1,12 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <algorithm>
 #include <array>
-#include <iostream>
 #include <random>
-#include <set>
-#include <vector>
+#include <ranges>
 
 #include "cards.hpp"
 
@@ -93,30 +90,33 @@ struct SameOrDiffChecker {
 };
 
 Results findSets(const Cards &table) {
+  using namespace std::views;
+
   Results results;
   SameOrDiffChecker sameOrDiff;
   std::array<Cards, 3> cardsByColor;
 
-  // Generate color-homogeneous candidates.
   int i = 0;
   for (Color color : Attributes::colors) {
-    // Collect cards with this color.
-    Cards colorCards{};
-    std::copy_if(table.begin(), table.end(), std::back_inserter(colorCards),
-                 [color](const Card &card) { return card.color == color; });
+    auto colorView = filter(table, [color](const Card &card) { return card.color == color; });
+    Cards colorCards{begin(colorView), end(colorView)};
 
-    // Build and check candidate sets for this color.
+    // Generate and check color-homogeneous candidates.
     Candidates colorCands = getColorHomogCands(colorCards);
     results.setColorCandidates(color, colorCands.size());
-    std::copy_if(colorCands.begin(), colorCands.end(), std::back_inserter(results.sets), sameOrDiff);
+
+    auto setsView = filter(colorCands, sameOrDiff);
+    results.sets.insert(end(results.sets), begin(setsView), end(setsView));
+
     cardsByColor[i++] = std::move(colorCards);
   }
 
-  // Build and check color-distinct candidates.
+  // Generate and check color-distinct candidates.
   Candidates colorDistinctCands = getColorDistinctCands(cardsByColor);
   results.distinctCandidates = colorDistinctCands.size();
-  std::copy_if(colorDistinctCands.begin(), colorDistinctCands.end(), std::back_inserter(results.sets),
-               sameOrDiff);
+
+  auto setsView = filter(colorDistinctCands, sameOrDiff);
+  results.sets.insert(end(results.sets), begin(setsView), end(setsView));
 
   return results;
 }

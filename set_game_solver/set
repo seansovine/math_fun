@@ -5,7 +5,7 @@ set -e
 clear
 
 echo "Build time:"
-time g++ find_sets.cpp -o build/find_sets
+time g++ -std=c++20 find_sets.cpp -o build/find_sets
 
 # Thanks Stack Overflow: https://stackoverflow.com/questions/11027679/capture-stdout-and-stderr-into-different-variables
 {
