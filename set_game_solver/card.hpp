@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-/* Putting definitions here for now, since small program. */
+/* Definitions and data structures. */
 
 enum class Color { red, green, blue };
 enum class Number { one, two, three };
@@ -9,7 +9,6 @@ enum class Shading { filled, outlined, striped };
 enum class Shape { diamond, oval, squiggle };
 
 struct Attributes {
-  // For iterating over all options in various places. (Consider alternatives.)
   const static std::array<Color, 3> colors;
   const static std::array<Number, 3> numbers;
   const static std::array<Shading, 3> shadings;
@@ -86,4 +85,26 @@ struct Candidate {
   Candidate(const Card &first, const Card &second, const Card &third) : cards{first, second, third} {}
 
   const Card &operator[](const int i) const { return cards[i]; }
+};
+
+using Cards = std::vector<Card>;
+using Candidates = std::vector<Candidate>;
+
+struct Results {
+  int redCandidates;
+  int greenCandidates;
+  int blueCandidates;
+  int distinctCandidates;
+  Candidates sets;
+
+  void setColorCandidates(Color color, int number) {
+    switch (color) {
+    case Color::red:
+      redCandidates = number;
+    case Color::green:
+      greenCandidates = number;
+    case Color::blue:
+      blueCandidates = number;
+    }
+  }
 };
