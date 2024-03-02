@@ -47,7 +47,7 @@ std::string outputForResults(const Results &results) {
 /* Main. */
 
 int main() {
-  static const size_t CARDS_ON_TABLE = 16;
+  static const size_t CARDS_ON_TABLE = 15;
   static_assert(CARDS_ON_TABLE <= 3 * 3 * 3 * 3);
 
   std::cout << std::endl << "Generating and shuffling deck." << std::endl;
