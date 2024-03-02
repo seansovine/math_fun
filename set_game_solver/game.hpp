@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <array>
+#include <memory>
 #include <random>
 #include <ranges>
 
@@ -87,36 +88,58 @@ struct SameOrDiffChecker {
   }
 };
 
-Results findSets(const Cards &table) {
-  using namespace std::views;
+class SetFinder {
 
-  Results results;
-  SameOrDiffChecker sameOrDiff;
-  std::array<Cards, 3> cardsByColor;
+public:
+  SetFinder(Cards &&inTable) : table{inTable}, results{} { setup(); }
 
-  int i = 0;
-  for (Color color : Attributes::colors) {
-    auto colorView = filter(table, [color](const Card &card) { return card.color == color; });
-    Cards colorCards{begin(colorView), end(colorView)};
+  std::shared_ptr<Results> find() {
+    using namespace std::views;
 
-    // Generate and check color-homogeneous candidates.
-    Candidates colorCands = getColorHomogCands(colorCards);
-    results.setColorCandidates(color, colorCands.size());
+    if(results) {
+      return results;
+    }
+    results = std::make_shared<Results>();
 
-    auto setsView = filter(colorCands, sameOrDiff);
-    results.sets.insert(end(results.sets), begin(setsView), end(setsView));
+    for (const auto &colorCands : candsByColor) {
+      auto setsView = filter(colorCands, sameOrDiff);
+      results->sets.insert(end(results->sets), begin(setsView), end(setsView));
+    }
 
-    cardsByColor[i++] = std::move(colorCards);
+    auto setsView = filter(colorDistinctCands, sameOrDiff);
+    results->sets.insert(end(results->sets), begin(setsView), end(setsView));
+
+    return results;
   }
 
-  // Generate and check color-distinct candidates.
-  Candidates colorDistinctCands = getColorDistinctCands(cardsByColor);
-  results.distinctCandidates = colorDistinctCands.size();
+private:
+  void setup() {
+    using namespace std::views;
 
-  auto setsView = filter(colorDistinctCands, sameOrDiff);
-  results.sets.insert(end(results.sets), begin(setsView), end(setsView));
+    int i = 0;
+    std::array<Cards, 3> cardsByColor;
 
-  return results;
-}
+    for (Color color : Attributes::colors) {
+      auto colorView = filter(table, [color](const Card &card) { return card.color == color; });
+      Cards colorCards{begin(colorView), end(colorView)};
+
+      candsByColor[i] = getColorHomogCands(colorCards);
+      results->setColorCandidates(color, size(candsByColor[i]));
+
+      cardsByColor[i++] = std::move(colorCards);
+    }
+
+    colorDistinctCands = getColorDistinctCands(cardsByColor);
+    results->distinctCandidates = size(colorDistinctCands);
+  }
+
+private:
+  Cards table;
+  std::shared_ptr<Results> results;
+  SameOrDiffChecker sameOrDiff;
+
+  std::array<Candidates, 3> candsByColor;
+  Candidates colorDistinctCands;
+};
 
 #endif // Header include guard
