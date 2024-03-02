@@ -14,7 +14,7 @@ public:
     shuffle();
   }
 
-  const Cards getDeck() const && { return deck; }
+  Cards getDeck() const { return deck; }
 
   Cards dealCards(unsigned num);
 
@@ -34,7 +34,7 @@ class SetFinder {
 public:
   SetFinder(Cards &&inTable);
 
-  const Results find() &&;
+  Results&& find() &&;
 
 private:
   void setup();
