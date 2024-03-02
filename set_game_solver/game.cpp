@@ -7,6 +7,11 @@
 
 /* ShuffledDeckBuilder members functions. */
 
+ShuffledDeckBuilder::ShuffledDeckBuilder() {
+  generate();
+  shuffle();
+}
+
 void ShuffledDeckBuilder::generate() {
   deck.reserve(3 * 3 * 3 * 3);
   for (Color color : Attributes::colors) {
@@ -97,7 +102,7 @@ struct SameOrDiffChecker {
 
 SetFinder::SetFinder(Cards &&inTable) : table{inTable}, results{} { setup(); }
 
-Results&& SetFinder::find() && {
+Results &&SetFinder::find() && {
   using namespace std::views;
   SameOrDiffChecker sameOrDiff;
 

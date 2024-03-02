@@ -9,10 +9,7 @@
 class ShuffledDeckBuilder {
 
 public:
-  ShuffledDeckBuilder() {
-    generate();
-    shuffle();
-  }
+  ShuffledDeckBuilder();
 
   Cards getDeck() const { return deck; }
 
