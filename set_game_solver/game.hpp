@@ -31,9 +31,7 @@ void shuffle(Cards &deck) {
   for (int i = deck.size() - 1; i >= 0; i--) {
     std::uniform_int_distribution<> distrib(0, i);
     int j = distrib(rng);
-    Card temp = deck[i];
-    deck[i] = deck[j];
-    deck[j] = temp;
+    std::swap(deck[i], deck[j]);
   }
 }
 
