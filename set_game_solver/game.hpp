@@ -51,4 +51,4 @@ private:
   Candidates colorDistinctCands;
 };
 
-#endif
+#endif // Header include guard

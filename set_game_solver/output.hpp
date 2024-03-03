@@ -9,4 +9,4 @@ std::string outputTable(const Cards &table);
 
 std::string outputForResults(const Results &results);
 
-#endif
+#endif // Header include guard
