@@ -12,11 +12,13 @@ usage() {
     echo "  Usage: Pass -r to rebuild."
 }
 
-while test $# != 0
-do
+while test $# != 0; do
     case "$1" in
     -r) rebuild=1 ;;
-    *)  usage; exit 0 ;;
+    *)
+        usage
+        exit 0
+        ;;
     esac
     shift
 done
@@ -28,12 +30,12 @@ fi
 
 # Thanks Stack Overflow: https://stackoverflow.com/questions/11027679/capture-stdout-and-stderr-into-different-variables
 {
-    IFS=$'\n' read -r -d '' RUNTIME;
-    IFS=$'\n' read -r -d '' OUTPUT;
-} < <((printf '\0%s\0' "$( time ./build/find_sets )" 1>&2) 2>&1)
+    IFS=$'\n' read -r -d '' RUNTIME
+    IFS=$'\n' read -r -d '' OUTPUT
+} < <((printf '\0%s\0' "$(time ./build/find_sets)" 1>&2) 2>&1)
 
 printf -- "\n---\n\n"
-printf "$OUTPUT\n\n"
+printf '%s\n\n' "$OUTPUT"
 printf -- "---\n\n"
 printf "Run time:\n\n"
-echo "$RUNTIME"
+printf '%s\n' "$RUNTIME"
