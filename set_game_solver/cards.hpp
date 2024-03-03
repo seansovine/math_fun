@@ -65,7 +65,7 @@ struct Results {
     }
   }
 
-  template <typename T>
+  template <std::ranges::view T>
   void setRemaining(T inRemaining) {
     remaining = Cards{begin(inRemaining), end(inRemaining)};
     for (size_t i = 0; i < size(remaining); i++) {
