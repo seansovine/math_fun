@@ -11,7 +11,7 @@ int main() {
   std::cout << outputTable(table);
 
   std::cout << std::endl << "Finding sets:" << std::endl << std::endl;
-  Results results = SetFinder(std::move(table)).find();
+  Results results = SetFinder{std::move(table)}.find();
 
   std::cout << outputForResults(results);
 }
