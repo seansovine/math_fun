@@ -47,7 +47,7 @@ private:
 private:
   Cards table;
   Results results;
-  std::array<Candidates, 3> candsByColor;
+  CandidatesByColor candsByColor;
   Candidates colorDistinctCands;
 };
 
