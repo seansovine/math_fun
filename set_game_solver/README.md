@@ -53,3 +53,7 @@ according to the game's definition.
 0 and 3 \* 3 \* 3 \* 3. The normal Set game uses 12 cards, unless there is
 no set in the current table cards, in which case 3 more cards are added
 until there is a set.
+
+**Example output:**
+
+![set solver output](https://github.com/seansovine/math_fun/blob/public/set_game_solver/example_output.png?raw=true)
