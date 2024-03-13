@@ -70,7 +70,7 @@ Candidates getColorHomogCands(const Cards &colorCards) {
   return colorCand;
 }
 
-Candidates getColorDistinctCands(const std::array<Cards, 3> &cardsByColor) {
+Candidates getColorDistinctCands(const CardsByColor &cardsByColor) {
   Candidates cands;
   for (Card card1 : cardsByColor[0]) {
     for (Card card2 : cardsByColor[1]) {
@@ -135,7 +135,7 @@ void SetFinder::setup() {
   using namespace std::views;
 
   int i = 0;
-  std::array<Cards, 3> cardsByColor;
+  CardsByColor cardsByColor;
 
   for (Color color : Attributes::colors) {
     auto colorView = filter(table, [color](const Card &card) { return card.color == color; });

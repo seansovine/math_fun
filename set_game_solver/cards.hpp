@@ -43,6 +43,7 @@ struct Candidate {
 };
 
 using Cards = std::vector<Card>;
+using CardsByColor = std::array<Cards, 3>;
 using Candidates = std::vector<Candidate>;
 using CandidatesByColor = std::array<Candidates, 3>;
 
