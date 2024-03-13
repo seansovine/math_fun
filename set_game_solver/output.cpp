@@ -4,10 +4,11 @@
 
 /* Output function definitions. */
 
+static constexpr int TABLE_WIDTH = 4;
+
 std::string printTableCards_(const Cards &table) {
   std::ostringstream buffer{};
 
-  static const int TABLE_WIDTH = 4;
   int tableSize = size(table);
   int numRows = tableSize / TABLE_WIDTH + (tableSize % TABLE_WIDTH != 0);
 
