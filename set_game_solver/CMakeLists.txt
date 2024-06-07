@@ -13,6 +13,8 @@ project(SetGameSolver
         DESCRIPTION "A simple program to generate set hands and find all sets in them."
         LANGUAGES CXX)
 
-add_library(setGameSolver cards.cpp game.cpp output.cpp)
+set(library_src cards.cpp game.cpp output.cpp)
+add_library(setGameSolver ${library_src})
+
 add_executable(findSets find_sets.cpp)
 target_link_libraries(findSets setGameSolver)
